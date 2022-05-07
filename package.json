@@ -22,7 +22,6 @@
   "homepage": "https://github.com/akrouk/PromiseSQL#readme",
   "dependencies": {
     "np": "^7.6.1",
-    "sequelize": "^6.19.0",
     "sqlite3": "^5.0.8"
   }
 }
