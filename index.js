@@ -1,4 +1,5 @@
 'use strict';
+const sqlite = require('sqlite3').verbose();
 var db;
 
 function open(file) {
