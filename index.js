@@ -27,14 +27,11 @@ function close() {
     db = undefined;
 }
 
-module.exports.file = function (filepath) {
+module.exports.file = async function (filepath) {
     open(filepath);
     const sql = `
-        CREATE TABLE IF NOT EXISTS table (
-            name TEXT NOT NULL UNIQUE,
-            id INT
-        );
+        CREATE TABLE IF NOT EXISTS mytable (name TEXT NOT NULL UNIQUE);
     `;
-    db.query(sql);
+    await db.query(sql);
     close();
 }
