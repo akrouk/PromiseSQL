@@ -1,14 +1,12 @@
 declare module "promisesql";
 
-const Operators = [ 'AND', 'OR', 'NOT' ];
-
 interface BaseArguments {
     filepath?: string,
 }
 
 interface SelectionArguments extends BaseArguments {
     all?: boolean,
-    columns?: Array<string>,
+    columns?: string[],
     from: string,
-    where?: Array<Array<string>|string>
+    where?: string[]
 }
