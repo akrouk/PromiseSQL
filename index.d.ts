@@ -1,12 +1,24 @@
 declare module "promisesql";
 
-interface BaseArguments {
+interface BaseOptions {
     filepath?: string,
 }
 
-interface SelectionArguments extends BaseArguments {
+interface SelectionOptions extends BaseOptions {
     all?: boolean,
     columns?: string[],
     from: string,
-    where?: string[]
+    where?: (string | string[])[]
+}
+
+interface InsertOptions extends BaseOptions {
+    table: string,
+    columns?: string[],
+    values?: (string[])[]
+}
+
+interface Expression {
+    lhs: string,
+    operator: string,
+    rhs: string
 }

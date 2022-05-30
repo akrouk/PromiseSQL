@@ -4,5 +4,6 @@ const { PromiseDB } = require('./lib/promisedb');
 module.exports = require('./lib/queries');
 module.exports.PromiseDB = PromiseDB;
 
-// Conditional operators for query arguments
-module.exports.operators = { AND: 'AND', OR: 'OR', NOT: 'NOT' };
+// Operators
+module.exports.expression = require('./util/operators/expression');
+module.exports.logic = require('./util/operators/logic');

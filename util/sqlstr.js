@@ -1,3 +1,5 @@
+const { parseColumns, parseValues, parseClause } = require('./sqlhelp');
+
 module.exports = {
     /**
      * Generates a string of an SQL selection statement.
@@ -7,19 +9,18 @@ module.exports = {
         if (!options.all && !options.columns)
             throw 'No columns specified.';
         
-        console.log(options.all);
-        let stmt = options.all ? 'SELECT * ' : 'SELECT ';
-        let conditions = options.where ?? [];
+        let stmt = options.all ? 'SELECT *\n' : 'SELECT ';
+        let whereClause = { stmt: '', conditions: [] };
 
-        if (options.columns) {
-            options.columns.forEach(column => {
-                stmt += column + ', ';
-            });
+        if (options.columns) 
+            stmt += parseColumns(options.columns);
 
-            stmt = stmt.slice(0, stmt.length - 2);
-        }
+        stmt += 'FROM ' + options.from;
 
-        stmt += ' FROM ' + options.from;
-        return { sql: stmt, args: conditions }; 
+        if (options.where) 
+            whereClause = parseClause('WHERE', options.where);
+
+        stmt += whereClause.stmt;
+        return { sql: stmt, args: whereClause.conditions }; 
     }
 }
