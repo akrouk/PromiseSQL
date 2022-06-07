@@ -22,9 +22,8 @@ module.exports = {
     parseValues: function(values) {
         stmt = '(';
 
-        values.forEach(value => {
-            stmt += value + ', ';
-        });
+        for (i = 0; i < values.length; i++)
+            stmt += '?, ';
 
         stmt = stmt.slice(0, stmt.length - 2);
         return stmt + ')'; 
@@ -35,7 +34,7 @@ module.exports = {
      * @param {string} type 
      * @param {(string|Expression)[]} expressions 
      */
-    parseClause(type, expressions) {
+    parseClause: function(type, expressions) {
         let stmt = '\n' + type + ' ', conditions = [];
 
         expressions.forEach(expression => {
@@ -50,5 +49,13 @@ module.exports = {
 
         stmt = stmt.slice(0, stmt.length - 1);
         return { stmt, conditions };
+    },
+
+    /**
+     * Check whether the database is open
+     * @param {PromiseDB|undefined} db 
+     */
+    isOpen: function(db) {
+        if (!db) throw 'Database is not open.';
     }
 }

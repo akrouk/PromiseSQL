@@ -4,6 +4,7 @@ const { PromiseDB } = require('./lib/promisedb');
 module.exports = require('./lib/queries');
 module.exports.PromiseDB = PromiseDB;
 
-// Operators
+// Export condition functions (expressions, logic operators, etc.)
 module.exports.expression = require('./util/operators/expression');
 module.exports.logic = require('./util/operators/logic');
+module.exports.aggregate = require('./util/operators/aggregate');

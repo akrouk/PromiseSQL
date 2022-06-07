@@ -14,7 +14,7 @@ interface SelectionOptions extends BaseOptions {
 interface InsertOptions extends BaseOptions {
     table: string,
     columns?: string[],
-    values?: (string[])[]
+    values: string[]
 }
 
 interface Expression {
