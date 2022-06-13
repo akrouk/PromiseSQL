@@ -52,10 +52,12 @@ module.exports = {
     },
 
     /**
-     * Check whether the database is open
-     * @param {PromiseDB|undefined} db 
+     * Check whether a database is open.
+     * @param {object|undefined} db 
      */
     isOpen: function(db) {
-        if (!db) throw 'Database is not open.';
+        if (!db) {
+            throw new Error('Database is not open.');
+        }
     }
 }
