@@ -33,3 +33,12 @@ interface Expression {
     operator: string,
     rhs: string
 }
+
+interface Datatype {
+    name: string,
+    notnull?: boolean,
+    unique?: boolean,
+    primaryKey?: boolean,
+    check?: string,
+    default?: string
+}
