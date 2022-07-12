@@ -34,20 +34,20 @@ module.exports = {
      * @param {string} type 
      * @param {(string|Expression)[]} expressions 
      */
-    parseClause: function(type, expressions) {
+    parseClause: function(type, expressions, delimiter = ' ') {
         let stmt = '\n' + type + ' ', conditions = [];
 
         expressions.forEach(expression => {
             if (expression.constructor.name === 'Object') {
-                stmt += expression.lhs + ' ' + expression.operator + ' ? ';
+                stmt += expression.lhs + ' ' + expression.operator + ' ?' + delimiter;
                 conditions.push(expression.rhs);
             }
             else {
-                stmt += expression + ' ';
+                stmt += expression + delimiter;
             }
         });
 
-        stmt = stmt.slice(0, stmt.length - 1);
+        stmt = stmt.slice(0, stmt.length - delimiter.length);
         return { stmt, conditions };
     },
 

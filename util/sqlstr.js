@@ -55,7 +55,7 @@ module.exports = {
 
         let stmt = `UPDATE ${options.table}`;
 
-        let setClause = parseClause('SET', options.set);
+        let setClause = parseClause('SET', options.set, ', ');
         let whereClause = EMPTY_CLAUSE;
 
         stmt += setClause.stmt;
@@ -64,7 +64,7 @@ module.exports = {
             whereClause = parseClause('WHERE', options.where);
 
         stmt += whereClause.stmt;
-        let conditions = setClause.conditions.concat(whereClause.conditions);
+        const conditions = setClause.conditions.concat(whereClause.conditions);
         return { sql: stmt, args: conditions };
     },
 
