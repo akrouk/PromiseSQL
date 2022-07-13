@@ -1,5 +1,5 @@
 # :hatching_chick: PromiseSQL
-A lightweight module for running simple, promise-based SQLite3 queries in node.js. It works best in smaller projects with a lot of asynchronous development, e.g., a Discord bot with slash commands.
+A lightweight module for running simple, promise-based SQLite3 queries in node.js. It works best in smaller projects with a lot of asynchronous development, e.g., a Discord bot that implements slash commands.
 
 ```javascript
 const db = require('promisesql');
