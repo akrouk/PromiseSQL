@@ -21,7 +21,19 @@ db.close();
 This module is still a work in progress. By design, it was created as an SQL backend for interaction-based Discord bots built in [discord.js v13](https://discord.js.org/#/docs/discord.js/v13/general/welcome). It is intended to create more user-friendly, asynchronous query functions on top of [node-sqlite3](https://www.npmjs.com/package/sqlite3), which take in "options" objects as arguments, a practice inspired by discord.js. While it can run any query asychronous, it currently only supports the following built-in query and expression functions:
 
 - Queries
-  - Insert
+  - `insert({ table: string, columns?: string[], values: string[])`
+    
+    Example:
+    ```javascript
+    const id = '123456789';
+    const username = 'user99';
+    
+    await db.insert({
+      table: 'users',
+      columns: [ 'id', 'username' ],
+      values: [ id, username ]
+    });
+    ```
   - Select
   - Update
   - Delete
