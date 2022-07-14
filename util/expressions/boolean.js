@@ -3,7 +3,7 @@ module.exports = {
      * Equals expression (lhs = rhs)
      * @param {string} lhs 
      * @param {string} rhs 
-     * @returns 
+     * @returns {BooleanExpression}
      */
     eq: function(lhs, rhs) {
         return { lhs: lhs, operator: '=', rhs: rhs };
@@ -13,7 +13,7 @@ module.exports = {
      * Less than expression (lhs < rhs)
      * @param {string} lhs 
      * @param {string} rhs 
-     * @returns 
+     * @returns {BooleanExpression}
      */
     lt: function(lhs, rhs) {
         return { lhs: lhs, operator: '<', rhs: rhs };
@@ -23,7 +23,7 @@ module.exports = {
      * Greater than expression (lhs > rhs)
      * @param {string} lhs 
      * @param {string} rhs 
-     * @returns 
+     * @returns {BooleanExpression}
      */
     gt: function(lhs, rhs) {
         return { lhs: lhs, operator: '>', rhs: rhs };
@@ -33,7 +33,7 @@ module.exports = {
      * Less than or equal to expression (lhs <= rhs)
      * @param {string} lhs 
      * @param {string} rhs 
-     * @returns 
+     * @returns {BooleanExpression}
      */
     leq: function(lhs, rhs) {
         return { lhs: lhs, operator: '<=', rhs: rhs };
@@ -43,7 +43,7 @@ module.exports = {
      * Greater than or equal to expression (lhs >= rhs)
      * @param {string} lhs 
      * @param {string} rhs 
-     * @returns 
+     * @returns {BooleanExpression}
      */
     geq: function(lhs, rhs) {
         return { lhs: lhs, operator: '>=', rhs: rhs };

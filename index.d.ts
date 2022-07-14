@@ -1,7 +1,18 @@
 declare module "promisesql";
 
+type DataObject = Object;
+type DataArray = DataObject[];
+
+type QueryRetval = void | DataObject | DataArray | undefined;
+type QueryPromise = Promise<QueryRetval>;
+
 interface BaseOptions {
-    filepath?: string,
+    file?: string,
+}
+
+interface RunOptions extends BaseOptions {
+    statement: string,
+    args?: any[]
 }
 
 interface InsertOptions extends BaseOptions {
@@ -10,7 +21,11 @@ interface InsertOptions extends BaseOptions {
     values: string[]
 }
 
+type SelectionRetval = DataObject | DataArray | undefined;
+type SelectionPromise = Promise<SelectionRetval>;
+
 interface SelectionOptions extends BaseOptions {
+    first?: boolean,
     all?: boolean,
     columns?: string[],
     from: string,
@@ -28,7 +43,7 @@ interface DeleteOptions extends BaseOptions {
     where?: (string | Expression)[]
 }
 
-interface Expression {
+interface BooleanExpression {
     lhs: string,
     operator: string,
     rhs: string
