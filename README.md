@@ -27,7 +27,7 @@ While it can run any query asychronously, it currently only supports the followi
 ## Queries
 
 ### Insert
-`insert({ table: string, columns?: string[], values: string[])`
+`insert({ table: string, columns?: string[], values: string[] })`
 ```javascript
 const id = '123456789';
 const username = 'user99';
@@ -42,6 +42,7 @@ await db.insert({
 ### Select
 ### Update
 ### Delete
+### Run
 ## Expressions
   - Boolean
   - Aggregate
