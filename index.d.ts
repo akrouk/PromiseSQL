@@ -3,7 +3,7 @@ declare module "promisesql";
 type DataObject = Object;
 type DataArray = DataObject[];
 
-type QueryRetval = void | DataObject | DataArray | undefined;
+type QueryRetval = void | DataObject | DataArray;
 type QueryPromise = Promise<QueryRetval>;
 
 interface BaseOptions {
@@ -21,7 +21,7 @@ interface InsertOptions extends BaseOptions {
     values: string[]
 }
 
-type SelectionRetval = DataObject | DataArray | undefined;
+type SelectionRetval = DataObject | DataArray;
 type SelectionPromise = Promise<SelectionRetval>;
 
 interface SelectionOptions extends BaseOptions {

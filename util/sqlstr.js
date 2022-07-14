@@ -1,5 +1,5 @@
 const { parseColumns, parseValues, parseClause } = require('./sqlhelp');
-const EMPTY_CLAUSE = { stmt: '', conditions: [] };
+const emptyClause = { stmt: '', conditions: new Array() };
 
 module.exports = {
     /**
@@ -30,7 +30,7 @@ module.exports = {
             throw new Error('No columns specified.');
         
         let stmt = options.all ? 'SELECT *\n' : 'SELECT ';
-        let whereClause = EMPTY_CLAUSE;
+        let whereClause = emptyClause;
 
         if (options.columns) 
             stmt += parseColumns(options.columns);
@@ -56,7 +56,7 @@ module.exports = {
         let stmt = `UPDATE ${options.table}`;
 
         let setClause = parseClause('SET', options.set, ', ');
-        let whereClause = EMPTY_CLAUSE;
+        let whereClause = emptyClause;
 
         stmt += setClause.stmt;
 
@@ -78,7 +78,7 @@ module.exports = {
             throw new Error('No table specified.');
 
         let stmt = `DELETE FROM ${options.table}`;
-        let whereClause = EMPTY_CLAUSE;
+        let whereClause = emptyClause;
 
         if (options.where)
             whereClause = parseClause('WHERE', options.where);
