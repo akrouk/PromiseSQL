@@ -23,4 +23,4 @@ db.close();
 By design, it was created as an SQL backend for interaction-based Discord bots built in [discord.js v13](https://discord.js.org/#/docs/discord.js/v13/general/welcome). It is intended to create more user-friendly, asynchronous query functions, which take in an "options" object as arguments, a practice inspired by discord.js. 
 
 # Documentation
-Documentation can be found in the [wiki](https://github.com/akrouk/PromiseSQL/wiki/Documentation).
+Documentation can be found on the [wiki](https://github.com/akrouk/PromiseSQL/wiki/Documentation).
