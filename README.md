@@ -26,11 +26,21 @@ While it can run any query asychronously, it currently only supports the followi
 
 ## Queries
 
-### Insert
-`insert({ table: string, columns?: string[], values: string[] })`
+### Base Options
+`{ file?: string, table?: string }`
+
+Any query can be run with the `file` option, which represents the relative path to a database file. The database will be accessed dynamically during the query and will only remain open until its resolution. This is ideal for avoiding the clutter of synchronously accessing a database when only a single query needs to be run.
+
 ```javascript
-const id = '123456789';
-const username = 'user99';
+// No need to call db.open('./database.db') or db.close(). This query will handle that itself!
+const data = await db.select({ file: './database.db', all: true, from: 'table' }); 
+```
+
+### Insert
+`insert({ into: string, columns?: string[], values: string[] })`
+```javascript
+var id = '123456789';
+var username = 'user99';
 
 await db.insert({
   table: 'users',
@@ -42,7 +52,7 @@ await db.insert({
 ### Select
 ### Update
 ### Delete
-### Run
+
 ## Expressions
   - Boolean
   - Aggregate
