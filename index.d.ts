@@ -8,6 +8,7 @@ type QueryPromise = Promise<QueryRetval>;
 
 interface BaseOptions {
     file?: string,
+    table?: string
 }
 
 interface RunOptions extends BaseOptions {
@@ -16,7 +17,7 @@ interface RunOptions extends BaseOptions {
 }
 
 interface InsertOptions extends BaseOptions {
-    table: string,
+    into: string,
     columns?: string[],
     values: string[]
 }
@@ -39,7 +40,7 @@ interface UpdateOptions extends BaseOptions {
 }
 
 interface DeleteOptions extends BaseOptions {
-    table: string,
+    from: string,
     where?: (string | Expression)[]
 }
 

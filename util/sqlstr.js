@@ -8,10 +8,10 @@ module.exports = {
      * @returns {string}
      */
      insertStr: function(options) {
-        if (!options.table || !options.values)
+        if (!(options.table || options.into) || !options.values)
             throw new Error('No table or values specified.');
 
-        let stmt = `INSERT INTO ${options.table}`;
+        let stmt = `INSERT INTO ${options.table ?? options.into}`;
 
         if (options.columns)
             stmt += ` (${parseColumns(options.columns)})`;
@@ -29,13 +29,13 @@ module.exports = {
         if (!options.all && !options.columns)
             throw new Error('No columns specified.');
         
-        let stmt = options.all ? 'SELECT *\n' : 'SELECT ';
+        let stmt = options.all ? 'SELECT *' : 'SELECT ';
         let whereClause = emptyClause;
 
         if (options.columns) 
             stmt += parseColumns(options.columns);
 
-        stmt += `\nFROM ${options.from}`;
+        stmt += `\nFROM ${options.table ?? options.from}`;
 
         if (options.where) 
             whereClause = parseClause('WHERE', options.where);
@@ -74,10 +74,10 @@ module.exports = {
      * @returns {string}
      */
     deleteStr: function(options) {
-        if (!options.table)
+        if (!(options.table || options.from))
             throw new Error('No table specified.');
 
-        let stmt = `DELETE FROM ${options.table}`;
+        let stmt = `DELETE FROM ${options.table ?? options.from}`;
         let whereClause = emptyClause;
 
         if (options.where)
