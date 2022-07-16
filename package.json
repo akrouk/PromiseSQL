@@ -4,5 +4,33 @@
     "np": "^7.6.2",
     "sqlite3": "^5.0.9",
     "synchronized-promise": "^0.3.1"
-  }
+  },
+  "types": "./index.d.ts",
+  "name": "promisesql",
+  "description": "A [node-sqlite3](https://www.npmjs.com/package/sqlite3) wrapper for running simple, promise-based database queries in Node.js. It works best in smaller projects with a lot of asynchronous development, e.g., a Discord bot that implements slash commands.",
+  "version": "1.2.2",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akrouk/PromiseSQL.git"
+  },
+  "keywords": [
+    "node-sqlite3",
+    "sqlite3",
+    "node.js",
+    "sql"
+  ],
+  "author": "AJK",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akrouk/PromiseSQL/issues"
+  },
+  "homepage": "https://github.com/akrouk/PromiseSQL#readme"
 }
