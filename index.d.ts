@@ -30,18 +30,18 @@ interface SelectionOptions extends BaseOptions {
     all?: boolean,
     columns?: string[],
     from: string,
-    where?: (string | Expression)[]
+    where?: (string | BooleanExpression)[]
 }
 
 interface UpdateOptions extends BaseOptions {
     table: string,
-    set: (string | Expression)[],
-    where?: (string | Expression)[]
+    set: (string | BooleanExpression)[],
+    where?: (string | BooleanExpression)[]
 }
 
 interface DeleteOptions extends BaseOptions {
     from: string,
-    where?: (string | Expression)[]
+    where?: (string | BooleanExpression)[]
 }
 
 interface BooleanExpression {
