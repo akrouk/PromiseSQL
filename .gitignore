@@ -105,3 +105,6 @@ dist
 
 # Database
 *.db
+
+# Jest
+*.test.js
