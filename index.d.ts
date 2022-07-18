@@ -44,6 +44,11 @@ interface DeleteOptions extends BaseOptions {
     where?: (string | BooleanExpression)[]
 }
 
+interface UpsertOptions extends InsertOptions {
+    set: (string | BooleanExpression)[],
+    where?: (string | BooleanExpression)[] 
+}
+
 interface BooleanExpression {
     lhs: string,
     operator: string,

@@ -1,4 +1,6 @@
-const { parseColumns, parseValues, parseClause } = require('./sqlhelp');
+const { parseColumns, parseValues, parseClause } = require('./helpers');
+const { typeError } = require('./psql-error');
+
 const emptyClause = { stmt: '', conditions: new Array() };
 
 module.exports = {
@@ -7,9 +9,9 @@ module.exports = {
      * @param {InsertOptions} options Arguments passed into {@link queries}
      * @returns {string}
      */
-     insertStr: function(options) {
-        if (!(options.table || options.into) || !options.values)
-            throw new Error('No table or values specified.');
+    insertStr: function(options) {
+        if (!(options.table || options.into)) typeError('table');
+        if (!options.values) typeError('values');
 
         let stmt = `INSERT INTO ${options.table ?? options.into}`;
 
@@ -23,11 +25,11 @@ module.exports = {
     /**
      * Generates an SQL selection statement string.
      * @param {SelectionOptions} options Arguments passed into {@link queries}
-     * @returns {string}
+     * @returns {Object}
      */
     selectStr: function(options) {
-        if (!options.all && !options.columns)
-            throw new Error('No columns specified.');
+        if (!(options.table || options.from)) typeError('table');
+        if (!(options.all || options.columns)) typeError('columns');
         
         let stmt = options.all ? 'SELECT *' : 'SELECT ';
         let whereClause = emptyClause;
@@ -47,11 +49,11 @@ module.exports = {
     /**
      * Generates an SQL update statement string.
      * @param {UpdateOptions} options Arguments passed into {@link queries}
-     * @returns {string}
+     * @returns {Object}
      */
     updateStr: function(options) {
-        if (!options.table || !options.set)
-            throw new Error('No table or columns specified.');
+        if (!options.table) typeError('table');
+        if (!options.set) typeError('set values');
 
         let stmt = `UPDATE ${options.table}`;
 
@@ -71,11 +73,10 @@ module.exports = {
     /**
      * Generates an SQL delete statement string.
      * @param {DeleteOptions} options Arguments passed into {@link queries}
-     * @returns {string}
+     * @returns {Object}
      */
     deleteStr: function(options) {
-        if (!(options.table || options.from))
-            throw new Error('No table specified.');
+        if (!(options.table || options.from)) typeError('table');
 
         let stmt = `DELETE FROM ${options.table ?? options.from}`;
         let whereClause = emptyClause;

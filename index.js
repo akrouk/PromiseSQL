@@ -1,13 +1,23 @@
-const { PromiseDB } = require('./lib/promisedb');
+module.exports = {
+    // PromiseDB class
+    PromiseDB: require('./lib/promisedb').PromiseDB, 
 
-// Export query functions and PromiseDB class
-module.exports = require('./lib/queries');
-module.exports.PromiseDB = PromiseDB;
+    // Query functions
+    ...require('./lib/queries'),
 
-// Export conditions (expressions, operators, etc.)
-module.exports.expression = {
-    ...require('./lib/expressions/boolean'),
-    ...require('./lib/expressions/numeric')
-};
+    // Increment and decrement
+    increment: column => `${column} = ${column} + 1`,
+    decrement: column => `${column} = ${column} - 1`,
 
-module.exports.operator = require('./lib/operators/logic');
+    // Expression functions
+    expression: {
+        ...require('./lib/expressions/boolean'),
+        ...require('./lib/expressions/numeric')
+    },
+
+    // Operator variables
+    operator: require('./lib/operators/logic'),
+
+    // PSQLError class (for error checking)
+    PSQLError: require('./util/psql-error').PSQLError
+}

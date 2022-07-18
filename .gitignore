@@ -107,4 +107,4 @@ dist
 *.db
 
 # Jest
-*.test.js
+jest
