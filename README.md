@@ -1,5 +1,5 @@
 # :hatching_chick: PromiseSQL
-A [node-sqlite3](https://www.npmjs.com/package/sqlite3) wrapper for running simple, promise-based database queries in Node.js. It works best in smaller projects with a lot of asynchronous development, e.g., a Discord bot that implements slash commands.
+A [node-sqlite3](https://www.npmjs.com/package/sqlite3) wrapper for running simple, asynchronous database queries in Node.js. PromiseSQL is for those who take their coffee with syntactic sugar instead of black ☕. It's best suited for smaller projects that require resolving lots of promises, e.g., a Discord bot that implements slash commands.
 
 ```javascript
 const db = require('promisesql');
