@@ -1,4 +1,28 @@
+/**
+ * 
+ * @param {Object} data 
+ */
+ function simplifyObject(datum) {
+    for (const key of Object.keys(datum)) {
+        if (!key.includes('(') || !key.includes(')')) continue;
+        const newKey = key.substring(0, key.indexOf('(')).toLowerCase();
+        Object.assign(datum, { [newKey]: datum[key] });
+        delete datum[key];
+    }
+}
+
+/**
+ * 
+ * @param {Object[]} data 
+ */
+function simplifyArray(data) {
+    if (!data) return;
+    data.forEach(datum => simplifyObject(datum));
+}
+
 module.exports = {
+    simplifyArray, simplifyObject,
+
     /**
      * Parses the columns of an SQL statement.
      * @param {string[]} columns 

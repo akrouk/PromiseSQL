@@ -11,8 +11,8 @@ module.exports = {
     /**
      * Access error - database is not open!
      */
-    accessError: function() {
-        throw new PSQLError('PSQLAccessError', 'Database is not open.');
+    accessError: function(open = false) {
+        throw new PSQLError('PSQLAccessError', open ? 'Database is already open.' : 'Database is not open.');
     },
 
     /**
