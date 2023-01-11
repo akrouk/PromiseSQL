@@ -1,31 +1,31 @@
 declare module "promisesql";
 
-type DataObject = Object;
-type DataArray = DataObject[];
+export type DataObject = Object;
+export type DataArray = DataObject[];
 
-type QueryRetval = void | DataObject | DataArray;
-type QueryPromise = Promise<QueryRetval>;
+export type QueryRetval = void | DataObject | DataArray;
+export type QueryPromise = Promise<QueryRetval>;
 
-interface BaseOptions {
+export interface BaseOptions {
     file?: string,
     table?: string
 }
 
-interface RunOptions extends BaseOptions {
+export interface RunOptions extends BaseOptions {
     statement: string,
     args?: any[]
 }
 
-interface InsertOptions extends BaseOptions {
+export interface InsertOptions extends BaseOptions {
     into: string,
     columns?: string[],
     values: string[]
 }
 
-type SelectionRetval = DataObject | DataArray;
-type SelectionPromise = Promise<SelectionRetval>;
+export type SelectionRetval = DataObject | DataArray;
+export type SelectionPromise = Promise<SelectionRetval>;
 
-interface SelectionOptions extends BaseOptions {
+export interface SelectionOptions extends BaseOptions {
     first?: boolean,
     all?: boolean,
     columns?: string[],
@@ -33,23 +33,23 @@ interface SelectionOptions extends BaseOptions {
     where?: (string | BooleanExpression)[]
 }
 
-interface UpdateOptions extends BaseOptions {
+export interface UpdateOptions extends BaseOptions {
     table: string,
     set: (string | BooleanExpression)[],
     where?: (string | BooleanExpression)[]
 }
 
-interface DeleteOptions extends BaseOptions {
+export interface DeleteOptions extends BaseOptions {
     from: string,
     where?: (string | BooleanExpression)[]
 }
 
-interface UpsertOptions extends InsertOptions {
+export interface UpsertOptions extends InsertOptions {
     set: (string | BooleanExpression)[],
     where?: (string | BooleanExpression)[] 
 }
 
-interface BooleanExpression {
+export interface BooleanExpression {
     lhs: string,
     operator: string,
     rhs: string
