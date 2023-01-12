@@ -17,5 +17,5 @@
         // "Go to Definition" in VSCode
         "declarationMap": true
     },
-    "exclude": ["node_modules", "jest"]
+    "exclude": ["node_modules", "jest", "types"]
 }
