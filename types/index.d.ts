@@ -55,51 +55,34 @@ declare module "util/string" {
     export function deleteStr(options: DeleteOptions): any;
 }
 declare module "lib/queries" {
-    const _exports: {
-        sync: typeof sync;
-        /**
-         * Asynchronous delete query. Optional overload, since 'delete' is reserved keyword.
-         * @param {DeleteOptions} options
-         * @returns {Promise<void>}
-         */
-        delete: (options: DeleteOptions) => Promise<void>;
-        constructor: Function;
-        toString(): string;
-        toLocaleString(): string;
-        valueOf(): Object;
-        hasOwnProperty(v: PropertyKey): boolean;
-        isPrototypeOf(v: Object): boolean;
-        propertyIsEnumerable(v: PropertyKey): boolean;
-        simplifyOutput: (bit?: any) => boolean;
-        open: typeof open;
-        close: typeof close;
-        get: typeof get;
-    };
-    export = _exports;
+    /**
+     * Opens a database file.
+     * @param {string} file Relative path to the database file
+     * @returns {void|never}
+     */
+    export function open(file: string): void | never;
+    /**
+     * Closes an open database.
+     * @returns {void|never}
+     */
+    export function close(): void | never;
+    /**
+     * Retrieves the database, if open.
+     * @returns {PromiseDB|never}
+     */
+    export function get(): PromiseDB | never;
     /**
      * Synchronous query.
      * @param {Function} query
      * @param {string[]|BaseOptions} options
      * @returns {QueryRetval}
      */
-    function sync(query: Function, options?: string[] | BaseOptions): QueryRetval;
-    /**
-     * Opens a database file.
-     * @param {string} file Relative path to the database file
-     * @returns {void|never}
-     */
-    function open(file: string): void | never;
-    /**
-     * Closes an open database.
-     * @returns {void|never}
-     */
-    function close(): void | never;
-    /**
-     * Retrieves the database, if open.
-     * @returns {PromiseDB|never}
-     */
-    function get(): PromiseDB | never;
+    export function sync(query: Function, options?: string[] | BaseOptions): QueryRetval;
     import { PromiseDB } from "lib/promisedb";
+    export function simplifyOutput(bit?: any): boolean;
+    export function select(options: SelectionOptions): Promise<SelectionPromise>;
+    export function _delete(options: DeleteOptions): Promise<void>;
+    export { _delete as delete };
 }
 declare module "lib/expressions/boolean" {
     export = booleanExpressions;
@@ -114,7 +97,7 @@ declare module "lib/operators/logic" {
     export const OR: string;
     export const NOT: string;
 }
-declare module "index" {
+declare module "promise-sql" {
     const _exports: {
         increment: (column: any) => string;
         decrement: (column: any) => string;
@@ -132,19 +115,13 @@ declare module "index" {
             OR: string;
             NOT: string;
         };
-        sync: (query: Function, options?: any) => QueryRetval;
-        delete: (options: DeleteOptions) => Promise<void>;
-        constructor: Function;
-        toString(): string;
-        toLocaleString(): string;
-        valueOf(): Object;
-        hasOwnProperty(v: PropertyKey): boolean;
-        isPrototypeOf(v: Object): boolean;
-        propertyIsEnumerable(v: PropertyKey): boolean;
         simplifyOutput: (bit?: any) => boolean;
         open: (file: string) => void;
         close: () => void;
         get: () => import("lib/promisedb").PromiseDB;
+        select: (options: SelectionOptions) => Promise<SelectionPromise>;
+        sync: (query: Function, options?: string[] | BaseOptions) => QueryRetval;
+        delete: (options: DeleteOptions) => Promise<void>;
         PromiseDB: typeof import("lib/promisedb").PromiseDB;
     };
     export = _exports;

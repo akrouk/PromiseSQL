@@ -7,10 +7,10 @@
     "tsd-jsdoc": "^2.5.0"
   },
   "types": "./types/index.d.ts",
-  "name": "promisesql",
+  "name": "promise-sql",
   "description": "A [node-sqlite3](https://www.npmjs.com/package/sqlite3) wrapper for running simple, promise-based database queries in Node.js. It works best in smaller projects with a lot of asynchronous development, e.g., a Discord bot that implements slash commands.",
   "version": "1.2.10",
-  "main": "index.js",
+  "main": "promise-sql.js",
   "directories": {
     "lib": "lib"
   },
