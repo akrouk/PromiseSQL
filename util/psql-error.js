@@ -1,4 +1,8 @@
 class PSQLError extends Error {
+    /**
+     * @param {string} name 
+     * @param {string} message 
+     */
     constructor(name, message) {
         super(message);
         this.name = name;

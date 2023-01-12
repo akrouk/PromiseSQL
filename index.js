@@ -19,5 +19,5 @@ module.exports = {
     operator: require('./lib/operators/logic'),
 
     // PSQLError class (for error checking)
-    PSQLError: require('./util/psql-error').PSQLError
+    // PSQLError: require('./util/psql-error').PSQLError
 }
