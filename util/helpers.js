@@ -56,7 +56,7 @@ module.exports = {
     /**
      * Parses the clause of an SQL statement (WHERE, SET, etc.).
      * @param {string} type 
-     * @param {(string|Expression)[]} expressions 
+     * @param {(string|BooleanExpression)[]} expressions 
      */
     parseClause: function(type, expressions, delimiter = ' ') {
         let stmt = '\n' + type + ' ', conditions = [];

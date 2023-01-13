@@ -24,7 +24,7 @@ module.exports = {
 
     /**
      * Generates an SQL selection statement string.
-     * @param {SelectionOptions} options Arguments passed into {@link queries}
+     * @param {SelectionStatementOptions} options Arguments passed into {@link queries}
      * @returns {Object}
      */
     selectStr: function(options) {

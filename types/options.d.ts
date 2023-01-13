@@ -4,23 +4,18 @@ interface BooleanExpression {
     rhs: string
 }
 
-interface BaseOptions {
+interface BaseStatementOptions {
     file?: string,
     table?: string,
 }
 
-interface RunOptions extends BaseOptions {
-    statement: string,
-    args?: any[]
-}
-
-interface InsertOptions extends BaseOptions {
+interface InsertStatementOptions extends BaseStatementOptions {
     into: string,
     columns?: string[],
     values: string[]
 }
 
-interface SelectionOptions extends BaseOptions {
+interface SelectionStatementOptions extends BaseStatementOptions {
     first?: boolean,
     all?: boolean,
     columns?: string[],
