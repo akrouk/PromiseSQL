@@ -1,3 +1,29 @@
+declare module "util/psql-error" {
+    export class PSQLError extends Error {
+        /**
+         * @param {string} name
+         * @param {string} message
+         */
+        constructor(name: string, message: string);
+    }
+    export function accessError(open?: boolean): never;
+    export function asyncError(): never;
+    export function typeError(missing: string): never;
+}
+declare module "util/sql/statement-builder" {
+    export class StatementBuilder {
+        /**
+         * @param {StatementType} type
+         * @param {BaseStatementOptions} options
+         */
+        constructor(type: StatementType, options: BaseStatementOptions);
+        /**
+         * @returns {StatementObject}
+         */
+        get data(): StatementObject;
+        #private;
+    }
+}
 declare module "lib/promisedb" {
     const PromiseDB_base: any;
     export class PromiseDB extends PromiseDB_base {
@@ -14,26 +40,17 @@ declare module "lib/promisedb" {
          * "Runs the SQL query with the specified parameters and calls the callback with all result rows afterwards."
          * {@link https://github.com/TryGhost/node-sqlite3/wiki/API#allsql--param---callback}
          * @override
-         * @param {string} sql
-         * @param {string[]} params
+         * @param {{ sql: string, params?: any }|StatementBuilder} options
          * @returns
          */
-        override run(sql: string, params?: string[]): Promise<any>;
+        override run(options: StatementBuilder | {
+            sql: string;
+            params?: any;
+        }): Promise<any>;
         #private;
     }
+    import { StatementBuilder } from "util/sql/statement-builder";
     export {};
-}
-declare module "util/psql-error" {
-    export class PSQLError extends Error {
-        /**
-         * @param {string} name
-         * @param {string} message
-         */
-        constructor(name: string, message: string);
-    }
-    export function accessError(open?: boolean): never;
-    export function asyncError(): never;
-    export function typeError(missing: string): never;
 }
 declare module "util/helpers" {
     /**
@@ -157,31 +174,19 @@ declare module "promisesql" {
     };
     export = _exports;
 }
-declare module "util/sql/statement-builder" {
-    export class StatementBuilder {
-        /**
-         * @param {StatementType} type
-         * @param {BaseStatementOptions} options
-         */
-        constructor(type: StatementType, options: BaseStatementOptions);
-        type: StatementType;
-        options: BaseStatementOptions;
-        #private;
-    }
-}
 declare module "util/sql/statement" {
     export class Statement {
         /**
          * @param {PromiseDB|null} database
+         * @param {StatementType} type
          * @param {BaseStatementOptions} options
          */
-        constructor(database: PromiseDB | null, options: BaseStatementOptions);
-        database: PromiseDB;
-        options: BaseStatementOptions;
+        constructor(database: PromiseDB | null, type: StatementType, options: BaseStatementOptions);
         /**
-         * @param {StatementType} type
+         * @returns
          */
         run(): Promise<any>;
+        #private;
     }
     import { PromiseDB } from "lib/promisedb";
 }

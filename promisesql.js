@@ -1,9 +1,22 @@
+const { PromiseDB } = require('./lib/promisedb');
+const { SelectStatement } = require('./util/sql/statement');
+
+/** @type {PromiseDB|null} */
+var database = null;
+
 module.exports = {
     // PromiseDB class
-    PromiseDB: require('./lib/promisedb').PromiseDB, 
+    ...require('./lib/promisedb'), 
 
     // Query functions
-    ...require('./lib/queries'),
+    //...require('./lib/queries'),
+
+    /**
+     * @param {SelectStatementOptions} options 
+     * @returns 
+     */
+    select: async options => await new SelectStatement(database, options).run(), 
+
 
     // Increment and decrement
     increment: column => `${column} = ${column} + 1`,

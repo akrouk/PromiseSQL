@@ -1,45 +1,86 @@
-const { parseColumns, parseClause } = require("../helpers");
-const { typeError } = require("../psql-error");
+const { typeError } = require('../psql-error');
 
 class StatementBuilder {
-    #statements = {
-        select: () => this.#parseSelect()
+    #build = {
+        select: () => this.#buildSelectStatement()
     };
+
+    #type;
+    #options;
 
     /**
      * @param {StatementType} type
      * @param {BaseStatementOptions} options 
      */
     constructor(type, options) {
-        this.type = type;
-        this.options = options;
-        return this.#statements[this.type]();
+        this.#type = type;
+        this.#options = options;
     }
 
-    #parseSelect() {
-        const options = (/** @type {SelectionStatementOptions} */ (this.options));
+    /**
+     * @returns {StatementObject}
+     */
+    get data() {
+        return this.#build[this.#type]();
+    }
 
+    #buildSelectStatement() {
+        const options = (/** @type {SelectStatementOptions} */ (this.#options));
+
+        // Missing table or from
         if (!(options.table || options.from)) typeError('table');
+
+        // Missing columns or all
         if (!(options.all || options.columns)) typeError('columns');
         
-        const stmt = options.all ? [ 'SELECT *' ] : [ 'SELECT' ];
-        let whereClause = { stmt: '', conditions: new Array() };
+        // SELECT ...
+        const statement = [ 'SELECT' ];
 
-        if (options.columns) 
-            stmt += parseColumns(options.columns);
+        // ... * | columns ...
+        options.all ? statement.push('*') : statement.push(options.columns.join(', '))
 
-        stmt += `\nFROM ${options.table ?? options.from}`;
+        // ... FROM table ... 
+        statement.push('FROM', options.table ?? options.from);
 
-        if (options.where) 
-            whereClause = parseClause('WHERE', options.where);
-
-        stmt += whereClause.stmt;
+        // ... WHERE conditions;
+        const { clause, conditions } = this.#buildClause('WHERE', options.where);
+        statement.push(...clause);
 
         return { 
-            sql: stmt, 
-            params: whereClause.conditions,
+            sql: this.#punctuate(statement), 
+            params: conditions,
+            /** @param {any[]} data */
             parseData: data => (data.length > 0 && options.first) ? data[0] : data
         };
+    }
+
+    /**
+     * @param {ClauseType} type 
+     * @param {(string|BooleanExpression)[]|undefined} expressions
+     */
+    #buildClause(type, expressions) {
+        if (!expressions) return { clause: [], conditions: [] };
+
+        let clause = [ /** @type {string} */ (type) ], conditions = [];
+
+        for (const expression of expressions) {
+            if (typeof expression !== 'string') {
+                clause.push(expression.lhs, expression.operator, '?');
+                conditions.push(expression.rhs);
+            } else {
+                clause.push(expression);
+            }
+        } 
+
+        return { clause, conditions };
+    }
+
+    /**
+     * @param {string[]} statement 
+     * @returns 
+     */
+    #punctuate(statement) {
+        return statement.join(' ') + ';';
     }
 }
 
