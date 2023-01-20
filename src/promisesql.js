@@ -1,5 +1,6 @@
 const { PromiseDB } = require('./lib/promisedb');
-const { SelectStatement } = require('./util/sql/statement');
+const { SelectStatement } = require('./lib/statement');
+const { StatementBuilder } = require('./util/builders/statement-builder');
 
 /** @type {PromiseDB|null} */
 var database = null;

@@ -1,5 +1,5 @@
 const { parseColumns, parseValues, parseClause } = require('./helpers');
-const { typeError } = require('./psql-error');
+const { typeError } = require('../src/util/psql-error');
 
 const emptyClause = { stmt: '', conditions: new Array() };
 

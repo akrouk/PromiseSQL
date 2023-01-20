@@ -1,4 +1,4 @@
-const { StatementBuilder } = require('../util/sql/statement-builder');
+const { StatementBuilder } = require('../util/builders/statement-builder');
 const sqlite = require('sqlite3').verbose();
 
 class PromiseDB extends sqlite.Database { 
@@ -8,7 +8,7 @@ class PromiseDB extends sqlite.Database {
      * @param {BaseStatementOptions|null} options
      */
     constructor(file, options = null) {
-        super(file ?? options.file, console.error);
+        super(file ?? options.file, error => error ? console.log(error) : void 0);
         if (options && options.file) this.cleanup = () => this.close();
     }
 
@@ -31,11 +31,10 @@ class PromiseDB extends sqlite.Database {
      * Promise wrapper over node-sqlite3 all query.
      * "Runs the SQL query with the specified parameters and calls the callback with all result rows afterwards."
      * {@link https://github.com/TryGhost/node-sqlite3/wiki/API#allsql--param---callback}
-     * @override
-     * @param {{ sql: string, params?: any }|StatementBuilder} options 
+     * @param {StatementBuilder|{ sql: string, params?: any }} options 
      * @returns 
      */
-    run(options) {
+    query(options) {
         let { sql, params } = options instanceof StatementBuilder ? options.data : options;
 
         return new Promise((resolve, reject) => {
