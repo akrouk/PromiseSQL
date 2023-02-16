@@ -3,7 +3,10 @@ const typedefs = require('../typedefs');
 /**
  * @typedef {import('./insert-statement-builder').InsertStatementBuilder} InsertStatementBuilder
  * @typedef {import('./select-statement-builder').SelectStatementBuilder} SelectStatementBuilder
- * @typedef {InsertStatementBuilder|SelectStatementBuilder} Builders
+ * @typedef {import('./update-statement-builder').UpdateStatementBuilder} UpdateStatementBuilder
+ * @typedef {import('./remove-statement-builder').RemoveStatementBuilder} RemoveStatementBuilder
+ * 
+ * @typedef {InsertStatementBuilder|SelectStatementBuilder|UpdateStatementBuilder|RemoveStatementBuilder} Builders
  */
 
 class StatementBuilder {
@@ -14,13 +17,18 @@ class StatementBuilder {
     constructor(type = undefined, options = undefined) {
         this.type = type;
         this.options = options;
+        Object.assign(this, { ...options });
     }
 
     /**
      * @returns {Builders}
      */
     get builder() {
-        return require(`./${this.type}-statement-builder`);
+        return require(`./${this.type}-statement-builder`)[this.builderName];
+    }
+
+    get builderName() {
+        return this.type[0].toUpperCase() + this.type.substring(1) + 'StatementBuilder';
     }
 
     /**

@@ -8,27 +8,26 @@ class SelectStatementBuilder extends StatementBuilder {
      * @param {typedefs.SelectStatementOptions} options 
      */
     constructor(options) {
-        super('select', options)
-        Object.assign(this, { ...options });
+        super('select', options);
     }
 
     get data() {
-        // Missing table or from
+        // Missing table
         if (!(this.table || this.from)) typeError('table');
 
-        // Missing columns or all
+        // Missing columns
         if (!(this.all || this.columns)) typeError('columns');
         
         // SELECT ...
         const statement = [ 'SELECT' ];
 
-        // ... * | columns ...
+        // ... * | ...columns ...
         this.all ? statement.push('*') : statement.push(this.columns.join(', '))
 
         // ... FROM table ... 
         statement.push('FROM', this.table ?? this.from);
 
-        // ... WHERE conditions;
+        // ... WHERE ...conditions;
         const { clause, conditions } = buildClause('WHERE', this.where); 
         statement.push(...clause);
 
@@ -36,7 +35,7 @@ class SelectStatementBuilder extends StatementBuilder {
             sql: this.build(statement), 
             params: conditions,
             /** @param {any[]} data */
-            parseData: data => (data.length > 0 && options.first) ? data[0] : data
+            parseData: data => (data.length > 0 && this.first) ? data[0] : data
         };
     }
 

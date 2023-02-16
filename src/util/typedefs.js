@@ -1,3 +1,13 @@
+/** DATABASE */
+
+/**
+ * @typedef DatabaseOptions
+ * @property {boolean} [memory]
+ * @property {boolean} [disk]
+ * @property {string} file
+ * @property {boolean} [dynamic]
+ */
+
 /** EXPRESSIONS */
 
 /**
@@ -18,12 +28,11 @@
  * @typedef StatementObject
  * @property {string} sql
  * @property {any[]} params
- * @property {(data: any[]) => any} parseData
+ * @property {(data: any[]) => any|() => void} parseData
  */
 
 /**
  * @typedef BaseStatementProperties
- * @property {string} [file]
  * @property {string} [table]
  * 
  * @typedef InsertStatementProperties

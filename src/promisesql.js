@@ -1,23 +1,59 @@
 const { PromiseDB } = require('./lib/promisedb');
-const { SelectStatement } = require('./lib/statement');
-const { StatementBuilder } = require('./util/builders/statement-builder');
+const { InsertStatement, SelectStatement, UpdateStatement, RemoveStatement } = require('./lib/statement');
+const typedefs = require('./util/typedefs');
 
 /** @type {PromiseDB|null} */
 var database = null;
 
+/**
+ * @param {typedefs.RemoveStatementOptions} options 
+ * @returns 
+ */
+const removeStatment = async options => await new RemoveStatement(database, options).run();
+
 module.exports = {
     // PromiseDB class
-    ...require('./lib/promisedb'), 
+    ...require('./lib/promisedb'),
 
-    // Query functions
-    //...require('./lib/queries'),
+    // Database functions
 
     /**
-     * @param {SelectStatementOptions} options 
+     * Open a database file.
+     * @param {string|typedefs.DatabaseOptions} options
+     * @returns 
+     */
+    open: options => database = new PromiseDB(options),
+
+    /**
+     * Close the database.
+     */
+    close: () => {
+        database.close();
+        database = null;
+    },
+
+    // Query functions
+
+    /**
+     * @param {typedefs.InsertStatementOptions} options 
+     * @returns 
+     */
+    insert: async options => await new InsertStatement(database, options).run(),
+
+    /**
+     * @param {typedefs.SelectStatementOptions} options 
      * @returns 
      */
     select: async options => await new SelectStatement(database, options).run(), 
 
+    /**
+     * @param {typedefs.UpdateStatementOptions} options 
+     * @returns 
+     */
+    update: async options => await new UpdateStatement(database, options).run(),
+
+    remove: removeStatment,
+    delete: removeStatment,
 
     // Increment and decrement
     increment: column => `${column} = ${column} + 1`,
